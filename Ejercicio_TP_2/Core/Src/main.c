@@ -438,11 +438,15 @@ void invertir (uint16_t * vector, uint32_t longitud) {
 
 uint32_t max (int32_t * vectorIn, uint32_t longitud) {
 	int32_t aux = vectorIn[0];
+	int32_t max_index = 0;
+
 	for (uint32_t i = longitud; i > 0; i--) {
-		if (vectorIn[i-1] > aux)
+		if (vectorIn[i-1] > aux) {
 			aux = vectorIn[i-1];
+			max_index = i-1;
+		}
 	}
-	return aux;
+	return max_index;
 }
 
 void downSample (int32_t * vectorIn, int32_t * vectorOut, uint32_t longitud, uint32_t N){

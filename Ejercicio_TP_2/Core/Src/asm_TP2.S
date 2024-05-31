@@ -50,25 +50,31 @@ _exit1:
 //Ejercicio 2
 // uint32_t max (int32_t * vectorIn, uint32_t longitud)
 
+.thumb_func
 asm_max:
-		cbz r0, _exit2
+		push {r4 - r8}
+		cbz r0, _exit2 // Guardas de seguridad
 		cbz r1, _exit2
 
-		ldr r2, [r0]
+		ldr r2, [r0] // r2 -> maximo inicial
+		mov r4, r1 // r4 -> maximo indice inicial (longitud - 1)
+		sub r4, #1
 
 	_loop2:
-		subs r1, #1
+		subs r1, #1 // r1 -> indice
 		beq _exit2
 
 		ldr r3, [r0, r1, LSL #2]
-		cmp r3, r2
-		it hi
+		cmp r3, r2 // si r3 > r2 => r2 = r3
+		itt hi
 		movhi r2, r3
+		movhi r4, r1
 
-        b _loop2
+		b _loop2
 
 	_exit2:
-		mov r0, r2
+		mov r0, r4
+		pop {r4 - r8}
 		bx lr
 
 // Ejercicio 3
